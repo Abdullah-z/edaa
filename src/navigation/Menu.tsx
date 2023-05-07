@@ -90,6 +90,11 @@ const DrawerContent = (
       to: 'Account Statement',
       icon: assets.components,
     },
+    {
+      name: 'Order List',
+      to: 'Order List',
+      icon: assets.components,
+    },
     // {name: t('screens.articles'), to: 'Articles', icon: assets.document},
     // {name: t('screens.rental'), to: 'Pro', icon: assets.rental},
     // {name: t('screens.profile'), to: 'Profile', icon: assets.profile},

@@ -40,12 +40,12 @@ export default function Login() {
               minHeight: Dimensions.get('window').height,
               paddingVertical: '50%',
             }}>
-            <Block marginHorizontal={sizes.sm} marginTop={sizes.sm}>
+            <Block marginHorizontal={sizes.sm}>
               <Block
                 style={{
                   backgroundColor: 'rgba(112, 154, 195, .5)',
                   borderRadius: 20,
-                  marginBottom: sizes.sm,
+
                   maxHeight: 350,
                 }}
                 paddingHorizontal={sizes.sm}>

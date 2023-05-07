@@ -8,6 +8,7 @@ import SubRed from '../screens/SubRed';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import Login from '../screens/Login';
 import AcountStatement from '../screens/AcountStatement';
+import OrderList from '../screens/OrderList';
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,11 @@ export default () => {
       <Stack.Screen
         name="Account Statement"
         component={AcountStatement}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Order List"
+        component={OrderList}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

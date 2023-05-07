@@ -20,6 +20,7 @@ export default function Home() {
       <Block marginHorizontal={sizes.sm}>
         <PortfolioCard />
         <FundsDropdown />
+        <FundsDropdown />
       </Block>
     </ScrollView>
   );
