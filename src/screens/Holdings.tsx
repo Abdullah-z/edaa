@@ -1,38 +1,18 @@
 /* eslint-disable prettier/prettier */
 import {View, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useTheme} from '../hooks';
 import {useNavigation} from '@react-navigation/core';
-import {Block, Button, Text} from '../components';
-import {HStack, VStack, Avatar, Icon} from 'native-base';
+import {Block, Text} from '../components';
+import {HStack, Avatar, Icon} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import {VictoryPie} from 'victory-native';
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-  Cols,
-  Cell,
-} from 'react-native-table-component';
+import {Table, Rows} from 'react-native-table-component';
 import {Table_data} from './Data';
 
-export default function Dashboard() {
+export default function Holdings() {
   const navigation = useNavigation();
-  const [request, setRequest] = useState(1);
-  const [date, setDate] = useState('');
-  const {assets, colors, fonts, gradients, sizes} = useTheme();
-  const [id, setId] = useState([]);
-  const [name, setName] = useState([]);
-  const [end_State, setEnd_State] = useState(1);
-  const [current_index, setCurrent_index] = useState(2);
-  const [like, setlike] = useState(false);
-
-  const getCurrentTime = () => {
-    let today = new Date();
-    return today;
-  };
+  const {colors, sizes} = useTheme();
 
   const Data = [
     {label: 'FranchiseMe', y: 1, x: '10%'},
@@ -46,37 +26,6 @@ export default function Dashboard() {
     item.high_24h,
     item.ath,
   ]);
-  const _renderItem = ({item}) => {
-    return (
-      <Block radius={20} marginTop={sizes.xs} white padding={sizes.s}>
-        <Text style={{fontSize: 30}}>{item.title}</Text>
-        <HStack>
-          <VStack>
-            <Text primary bold p marginTop={sizes.sm}>
-              {item.text1}
-            </Text>
-            <Text success bold>
-              {item.text2}
-            </Text>
-          </VStack>
-          <Block align="flex-end" justify="center">
-            <TouchableOpacity
-              onPress={(c) => {
-                like === true ? setlike(false) : setlike(true);
-              }}>
-              <Icon
-                as={
-                  <Ionicons name={like === true ? 'heart' : 'heart-outline'} />
-                }
-                size={7}
-                color="black"
-              />
-            </TouchableOpacity>
-          </Block>
-        </HStack>
-      </Block>
-    );
-  };
 
   return (
     <>
@@ -193,28 +142,6 @@ export default function Dashboard() {
                   }}
                 />
               </Block>
-              {/* <VStack style={{justifyContent: 'center'}}>
-                <Icon
-                  as={<Ionicons name={'ellipse-outline'} />}
-                  size={7}
-                  mr="2"
-                  color="silver"
-                />
-                <Text>FranchiseMe</Text>
-                <Icon
-                  as={<Ionicons name={'ellipse-outline'} />}
-                  size={7}
-                  color={colors.primary}
-                />
-                <Text>S-Watch</Text>
-                <Icon
-                  as={<Ionicons name={'ellipse-outline'} />}
-                  size={7}
-                  mr="2"
-                  color="silver"
-                />
-                <Text>Cyber Play</Text>
-              </VStack> */}
             </HStack>
           </Block>
           <Block row>

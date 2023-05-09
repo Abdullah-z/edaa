@@ -9,6 +9,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import Login from '../screens/Login';
 import AcountStatement from '../screens/AcountStatement';
 import OrderList from '../screens/OrderList';
+import Holdings from '../screens/Holdings';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,11 @@ export default () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Holdings"
+        component={Holdings}
         options={{headerShown: false}}
       />
 
