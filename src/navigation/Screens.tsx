@@ -10,6 +10,7 @@ import Login from '../screens/Login';
 import AcountStatement from '../screens/AcountStatement';
 import OrderList from '../screens/OrderList';
 import Holdings from '../screens/Holdings';
+import Dashboard from '../screens/Dashboard';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +81,11 @@ export default () => {
       <Stack.Screen
         name="Order List"
         component={OrderList}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
