@@ -1,62 +1,169 @@
 /* eslint-disable prettier/prettier */
 import {View, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useTheme} from '../hooks';
 import {useNavigation} from '@react-navigation/core';
-import {Block, Button, Text} from '../components';
+import {Block, Text} from '../components';
 import {HStack, VStack, Avatar, Icon} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
 
 export default function Dashboard() {
   const navigation = useNavigation();
-  const [request, setRequest] = useState(1);
-  const [date, setDate] = useState('');
   const {assets, colors, fonts, gradients, sizes} = useTheme();
-  const [id, setId] = useState([]);
-  const [name, setName] = useState([]);
-  const [end_State, setEnd_State] = useState(1);
-  const [current_index, setCurrent_index] = useState(2);
+  const [current_index_1, setCurrent_index_1] = useState(2);
+  const [current_index_2, setCurrent_index_2] = useState(2);
+  const [current_index_3, setCurrent_index_3] = useState(2);
   const [like, setlike] = useState(false);
 
-  const getCurrentTime = () => {
-    let today = new Date();
-    return today;
-  };
-
-  const carouselItems = [
+  const carouselItems_1 = [
     {
-      title: 'Fund Name 1 Compatible item English or Urdu',
+      title: 'Profit Compatible item English or Urdu',
       text1: 'Text 1',
       text2: '23% ',
+      state: 'profit',
     },
     {
-      title: 'Fund Name 2 Compatible item English or Urdu',
+      title: 'Profit Compatible item English or Urdu',
       text1: 'Text 2',
       text2: '23% ',
+      state: 'profit',
     },
     {
-      title: 'Fund Name 3 Compatible item English or Urdu',
+      title: 'Profit Compatible item English or Urdu',
       text1: 'Text 3',
       text2: '23% ',
+      state: 'profit',
     },
     {
-      title: 'Fund Name 4 Compatible item English or Urdu',
+      title: 'Profit Compatible item English or Urdu',
       text1: 'Text 4',
       text2: '23% ',
+      state: 'profit',
     },
     {
-      title: 'Fund Name 5 Compatible item English or Urdu',
+      title: 'Profit Compatible item English or Urdu',
       text1: 'Text 5',
       text2: '23% ',
+      state: 'profit',
+    },
+  ];
+  const carouselItems_2 = [
+    {
+      title: 'Loss Compatible item English or Urdu',
+      text1: 'Text 1',
+      text2: '23% ',
+      state: 'loss',
+    },
+    {
+      title: 'Loss Compatible item English or Urdu',
+      text1: 'Text 2',
+      text2: '23% ',
+      state: 'loss',
+    },
+    {
+      title: 'Loss Compatible item English or Urdu',
+      text1: 'Text 3',
+      text2: '23% ',
+      state: 'loss',
+    },
+    {
+      title: 'Loss Compatible item English or Urdu',
+      text1: 'Text 4',
+      text2: '23% ',
+      state: 'loss',
+    },
+    {
+      title: 'Loss Compatible item English or Urdu',
+      text1: 'Text 5',
+      text2: '23% ',
+      state: 'loss',
+    },
+  ];
+  const carouselItems_3 = [
+    {
+      title: 'Active Name 1 Compatible item English or Urdu',
+      text1: 'Text 1',
+      text2: '23% ',
+      state: 'Active',
+    },
+    {
+      title: 'Active Name 2 Compatible item English or Urdu',
+      text1: 'Text 2',
+      text2: '23% ',
+      state: 'Active',
+    },
+    {
+      title: 'Active Name 3 Compatible item English or Urdu',
+      text1: 'Text 3',
+      text2: '23% ',
+      state: 'Active',
+    },
+    {
+      title: 'Active Name 4 Compatible item English or Urdu',
+      text1: 'Text 4',
+      text2: '23% ',
+      state: 'Active',
+    },
+    {
+      title: 'Active Name 5 Compatible item English or Urdu',
+      text1: 'Text 5',
+      text2: '23% ',
+      state: 'Active',
     },
   ];
 
-  const handleSnapToItem = (index) => {
-    setCurrent_index(index);
+  const handleSnapToItem = (data, index) => {
+    console.log('Called');
+    console.log('Index:' + index);
+    console.log('Data' + data);
+    {
+      data.map((e) => {
+        e.state === 'profit'
+          ? setCurrent_index_1(index)
+          : e.state === 'loss'
+          ? setCurrent_index_2(index)
+          : e.state === 'Active'
+          ? setCurrent_index_3(index)
+          : '';
+      });
+    }
+    console.log('Current_Index1' + current_index_1);
   };
 
-  console.log('Index :' + current_index);
+  const Map_Dots = (data) => {
+    return (
+      <HStack>
+        {data.map((e, index) => {
+          return (
+            <Icon
+              as={
+                <Ionicons
+                  name={
+                    e.state === 'Active'
+                      ? current_index_3 === index
+                        ? 'ellipse'
+                        : 'ellipse-outline'
+                      : e.state === 'profit'
+                      ? current_index_1 === index
+                        ? 'ellipse'
+                        : 'ellipse-outline'
+                      : e.state === 'loss'
+                      ? current_index_2 === index
+                        ? 'ellipse'
+                        : 'ellipse-outline'
+                      : ''
+                  }
+                />
+              }
+              size={4}
+              color={colors.gray}
+            />
+          );
+        })}
+      </HStack>
+    );
+  };
 
   const _renderItem = ({item}) => {
     return (
@@ -67,7 +174,17 @@ export default function Dashboard() {
             <Text primary bold p marginTop={sizes.sm}>
               {item.text1}
             </Text>
-            <Text success bold>
+            <Text
+              bold
+              color={
+                item.state === 'profit'
+                  ? colors.success
+                  : item.state === 'loss'
+                  ? colors.danger
+                  : item.state === 'Active'
+                  ? colors.success
+                  : ''
+              }>
               {item.text2}
             </Text>
           </VStack>
@@ -94,7 +211,6 @@ export default function Dashboard() {
     <>
       <View>
         <ScrollView
-          scrollEnabled={false}
           onResponderMove={() => {
             console.log('outer responding');
           }}>
@@ -148,234 +264,82 @@ export default function Dashboard() {
               </Block>
             </Block>
           </Block>
-          <Text primary h5 bold marginLeft={sizes.sm} marginTop={sizes.sm}>
-            Snap-Crausel
-          </Text>
-          <Block align="center">
-            <Carousel
-              layout={'default'}
-              sliderWidth={400}
-              itemWidth={150}
-              data={carouselItems}
-              renderItem={_renderItem}
-              onSnapToItem={handleSnapToItem}
-              initialScrollIndex={2}
-            />
-          </Block>
-
-          <HStack
-            style={{justifyContent: 'center'}}
-            marginTop={sizes.xs}
-            marginBottom={sizes.xs}>
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 0 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 1 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 2 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 3 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 4 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-          </HStack>
-
-          <Text
-            primary
-            h5
-            bold
-            marginLeft={sizes.sm}
-            marginRight={sizes.sm}
-            paddingTop={sizes.sm}
-            style={{borderTopWidth: 1, borderTopColor: 'silver'}}>
-            Snap-Crausel
-          </Text>
-          <Block align="center">
-            <Carousel
-              layout={'default'}
-              sliderWidth={400}
-              itemWidth={150}
-              data={carouselItems}
-              renderItem={_renderItem}
-              onSnapToItem={handleSnapToItem}
-              initialScrollIndex={2}
-            />
-          </Block>
-
-          <HStack
-            style={{justifyContent: 'center'}}
-            marginTop={sizes.xs}
-            marginBottom={sizes.xs}>
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 0 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 1 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 2 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 3 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 4 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-          </HStack>
-
-          <Text
-            primary
-            h5
-            bold
-            marginLeft={sizes.sm}
-            marginRight={sizes.sm}
-            paddingTop={sizes.sm}
-            style={{borderTopWidth: 1, borderTopColor: 'silver'}}>
-            Snap-Crausel
-          </Text>
-          <Block align="center">
-            <Carousel
-              layout={'default'}
-              sliderWidth={400}
-              itemWidth={150}
-              data={carouselItems}
-              renderItem={_renderItem}
-              onSnapToItem={handleSnapToItem}
-              initialScrollIndex={2}
-            />
-          </Block>
-
-          <HStack
-            style={{justifyContent: 'center'}}
-            marginTop={sizes.xs}
-            marginBottom={sizes.xs}>
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 0 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 1 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 2 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 3 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-            <Icon
-              as={
-                <Ionicons
-                  name={current_index === 4 ? 'ellipse' : 'ellipse-outline'}
-                />
-              }
-              size={4}
-              mr="2"
-              color={colors.gray}
-            />
-          </HStack>
         </ScrollView>
       </View>
+
+      <ScrollView
+        scrollEnabled={true}
+        onResponderMove={() => {
+          console.log('Inner responding');
+        }}>
+        <Text primary h5 bold marginLeft={sizes.sm} marginTop={sizes.sm}>
+          Top-Gainers By 1%
+        </Text>
+        <Block align="center">
+          <Carousel
+            layout={'default'}
+            sliderWidth={400}
+            itemWidth={150}
+            data={carouselItems_1}
+            renderItem={_renderItem}
+            onSnapToItem={(v) => handleSnapToItem(carouselItems_1, v)}
+            initialScrollIndex={2}
+          />
+        </Block>
+        <Block align="center" marginTop={sizes.sm} marginBottom={sizes.sm}>
+          {Map_Dots(carouselItems_1)}
+        </Block>
+
+        <Text
+          primary
+          h5
+          bold
+          marginLeft={sizes.sm}
+          marginRight={sizes.sm}
+          paddingTop={sizes.sm}
+          style={{borderTopWidth: 1, borderTopColor: 'silver'}}>
+          Top Losers by 1%
+        </Text>
+        <Block align="center">
+          <Carousel
+            layout={'default'}
+            sliderWidth={400}
+            itemWidth={150}
+            data={carouselItems_2}
+            renderItem={_renderItem}
+            onSnapToItem={(v) => handleSnapToItem(carouselItems_2, v)}
+            initialScrollIndex={2}
+          />
+        </Block>
+        <Block align="center" marginTop={sizes.sm} marginBottom={sizes.sm}>
+          {Map_Dots(carouselItems_2)}
+        </Block>
+
+        <Text
+          primary
+          h5
+          bold
+          marginLeft={sizes.sm}
+          marginRight={sizes.sm}
+          paddingTop={sizes.sm}
+          style={{borderTopWidth: 1, borderTopColor: 'silver'}}>
+          Most Active (By Volume)
+        </Text>
+        <Block align="center">
+          <Carousel
+            layout={'default'}
+            sliderWidth={400}
+            itemWidth={150}
+            data={carouselItems_3}
+            renderItem={_renderItem}
+            onSnapToItem={(v) => handleSnapToItem(carouselItems_3, v)}
+            initialScrollIndex={2}
+          />
+        </Block>
+        <Block align="center" marginTop={sizes.sm} marginBottom={sizes.sm}>
+          {Map_Dots(carouselItems_3)}
+        </Block>
+      </ScrollView>
     </>
   );
 }
