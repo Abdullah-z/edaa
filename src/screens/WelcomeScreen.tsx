@@ -1,4 +1,10 @@
-import {View, Image, Dimensions, StatusBar} from 'react-native';
+import {
+  View,
+  Image,
+  Dimensions,
+  StatusBar,
+  ImageBackground,
+} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -6,6 +12,8 @@ import {Block, Button, Text} from '../components';
 import {useTheme} from '../hooks';
 import {SliderBox} from 'react-native-image-slider-box';
 import {useNavigation} from '@react-navigation/core';
+
+import Background_Image from '../assets/images/Background_Register.jpg';
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
@@ -52,12 +60,13 @@ export default function WelcomeScreen() {
     //   </LinearGradient>
     // </ScrollView>
 
-    <ScrollView>
-      <LinearGradient
-        colors={['#fac6ef', '#076597', '#021021']}
-        style={{
-          minHeight: Dimensions.get('window').height + StatusBar.currentHeight,
-        }}>
+    <ImageBackground
+      source={Background_Image}
+      resizeMode="cover"
+      style={{
+        minHeight: Dimensions.get('window').height + StatusBar.currentHeight,
+      }}>
+      <ScrollView>
         <Block paddingTop={sizes.md} marginHorizontal={sizes.sm}>
           <Block marginTop={sizes.sm}>
             <Text p semibold white align="right">
@@ -85,6 +94,7 @@ export default function WelcomeScreen() {
               radius={100}
               width={'100%'}
               marginTop={sizes.sm}
+              onPress={() => navigation.navigate('Register')}
               style={{borderWidth: 1, borderColor: colors.white}}>
               <Text p semibold white>
                 Register
@@ -118,7 +128,7 @@ export default function WelcomeScreen() {
             </Text>
           </Block>
         </Block>
-      </LinearGradient>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }

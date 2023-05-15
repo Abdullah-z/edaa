@@ -1,10 +1,30 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Linking, Platform} from 'react-native';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
+import {
+  ImageBackground,
+  Dimensions,
+  View,
+  StatusBar,
+  Linking,
+  Platform,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import * as regex from '../constants/regex';
-import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
+import {Block, Button, Image, Text, Checkbox} from '../components/';
+
+import {ScrollView} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
+import {Icon, HStack, CheckIcon, Input, Select} from 'native-base';
+import {Ionicons} from '@expo/vector-icons';
+import {transparentize} from 'native-base/lib/typescript/theme/v33x-theme/tools';
+
+import PhoneInput from 'react-native-phone-number-input';
+
+import Background_Image from '../assets/images/Background_Register.jpg';
+//import {position} from 'native-base/lib/typescript/theme/styled-system';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -22,9 +42,12 @@ interface IRegistrationValidation {
 }
 
 const Register = () => {
+  const [value, setValue] = useState('');
+  const [formattedValue, setFormattedValue] = useState('');
   const {isDark} = useData();
   const {t} = useTranslation();
   const navigation = useNavigation();
+
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
     name: false,
     email: false,
@@ -38,7 +61,7 @@ const Register = () => {
     agreed: false,
   });
   const {assets, colors, gradients, sizes} = useTheme();
-
+  const [language, setLanguage] = useState('');
   const handleChange = useCallback(
     (value) => {
       setRegistration((state) => ({...state, ...value}));
@@ -63,194 +86,348 @@ const Register = () => {
     }));
   }, [registration, setIsValid]);
 
+  console.log('Value : ' + value);
   return (
-    <Block safe marginTop={sizes.md}>
-      <Block paddingHorizontal={sizes.s}>
-        <Block flex={0} style={{zIndex: 0}}>
-          <Image
-            background
-            resizeMode="cover"
-            padding={sizes.sm}
-            radius={sizes.cardRadius}
-            source={assets.background}
-            height={sizes.height * 0.3}>
-            <Button
-              row
-              flex={0}
-              justify="flex-start"
-              onPress={() => navigation.goBack()}>
-              <Image
-                radius={0}
-                width={10}
-                height={18}
-                color={colors.white}
-                source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
-              />
-              <Text p white marginLeft={sizes.s}>
-                {t('common.goBack')}
+    <Block primary paddingTop={sizes.md}>
+      <View>
+        <HStack
+          paddingBottom={sizes.s}
+          justifyContent="center"
+          marginX={sizes.s}>
+          <Block align="flex-start">
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text bold white p marginTop={sizes.s}>
+                Back
               </Text>
-            </Button>
-
-            <Text h4 center white marginBottom={sizes.md}>
-              {t('register.title')}
-            </Text>
-          </Image>
-        </Block>
-        {/* register form */}
-        <Block
-          keyboard
-          behavior={!isAndroid ? 'padding' : 'height'}
-          marginTop={-(sizes.height * 0.2 - sizes.l)}>
-          <Block
-            flex={0}
-            radius={sizes.sm}
-            marginHorizontal="8%"
-            shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
-          >
-            <Block
-              blur
-              flex={0}
-              intensity={90}
-              radius={sizes.sm}
-              overflow="hidden"
-              justify="space-evenly"
-              tint={colors.blurTint}
-              paddingVertical={sizes.sm}>
-              <Text p semibold center>
-                {t('register.subtitle')}
-              </Text>
-              {/* social buttons */}
-              <Block row center justify="space-evenly" marginVertical={sizes.m}>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.facebook}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.apple}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.google}
-                    height={sizes.m}
-                    width={sizes.m}
-                    color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-              </Block>
-              <Block
-                row
-                flex={0}
-                align="center"
-                justify="center"
-                marginBottom={sizes.sm}
-                paddingHorizontal={sizes.xxl}>
-                <Block
-                  flex={0}
-                  height={1}
-                  width="50%"
-                  end={[1, 0]}
-                  start={[0, 1]}
-                  gradient={gradients.divider}
-                />
-                <Text center marginHorizontal={sizes.s}>
-                  {t('common.or')}
-                </Text>
-                <Block
-                  flex={0}
-                  height={1}
-                  width="50%"
-                  end={[0, 1]}
-                  start={[1, 0]}
-                  gradient={gradients.divider}
-                />
-              </Block>
-              {/* form inputs */}
-              <Block paddingHorizontal={sizes.sm}>
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  label={t('common.name')}
-                  placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.name && isValid.name)}
-                  danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({name: value})}
-                />
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  label={t('common.email')}
-                  keyboardType="email-address"
-                  placeholder={t('common.emailPlaceholder')}
-                  success={Boolean(registration.email && isValid.email)}
-                  danger={Boolean(registration.email && !isValid.email)}
-                  onChangeText={(value) => handleChange({email: value})}
-                />
-                <Input
-                  secureTextEntry
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  label={t('common.password')}
-                  placeholder={t('common.passwordPlaceholder')}
-                  onChangeText={(value) => handleChange({password: value})}
-                  success={Boolean(registration.password && isValid.password)}
-                  danger={Boolean(registration.password && !isValid.password)}
-                />
-              </Block>
-              {/* checkbox terms */}
-              <Block row flex={0} align="center" paddingHorizontal={sizes.sm}>
-                <Checkbox
-                  marginRight={sizes.sm}
-                  checked={registration?.agreed}
-                  onPress={(value) => handleChange({agreed: value})}
-                />
-                <Text paddingRight={sizes.s}>
-                  {t('common.agree')}
-                  <Text
-                    semibold
-                    onPress={() => {
-                      Linking.openURL('https://www.creative-tim.com/terms');
-                    }}>
-                    {t('common.terms')}
-                  </Text>
-                </Text>
-              </Block>
-              <Button
-                onPress={handleSignUp}
-                marginVertical={sizes.s}
-                marginHorizontal={sizes.sm}
-                gradient={gradients.primary}
-                disabled={Object.values(isValid).includes(false)}>
-                <Text bold white transform="uppercase">
-                  {t('common.signup')}
-                </Text>
-              </Button>
-              <Button
-                primary
-                outlined
-                shadow={!isAndroid}
-                marginVertical={sizes.s}
-                marginHorizontal={sizes.sm}
-                onPress={() => navigation.navigate('Pro')}>
-                <Text bold primary transform="uppercase">
-                  {t('common.signin')}
-                </Text>
-              </Button>
-            </Block>
+            </TouchableOpacity>
           </Block>
-        </Block>
-      </Block>
+
+          <Block align="flex-end">
+            <Text bold white p marginTop={sizes.s}>
+              English
+            </Text>
+          </Block>
+        </HStack>
+      </View>
+
+      <ImageBackground
+        source={Background_Image}
+        resizeMode="cover"
+        style={{
+          minHeight: Dimensions.get('window').height + StatusBar.currentHeight,
+        }}>
+        <ScrollView>
+          <KeyboardAvoidingView
+            behavior="position"
+            keyboard
+            kyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}>
+            <Block style={{paddingTop: '13%', minHeight: 400}}>
+              <Block marginHorizontal={sizes.sm}>
+                <Block
+                  style={{
+                    borderRadius: 20,
+                  }}
+                  blur
+                  intensity={25}
+                  radius={sizes.sm}
+                  overflow="hidden"
+                  tint={colors.blurTint}
+                  paddingVertical={sizes.sm}>
+                  <Text h4 bold center white>
+                    {t('register.title')}
+                  </Text>
+
+                  <Block
+                    row
+                    flex={0}
+                    align="center"
+                    justify="center"
+                    marginBottom={sizes.sm}
+                    paddingHorizontal={sizes.xxl}></Block>
+
+                  <Block paddingHorizontal={sizes.sm}>
+                    <Text
+                      bold
+                      white
+                      marginBottom={sizes.xs}
+                      marginLeft={sizes.s}>
+                      {t('common.email')}
+                    </Text>
+
+                    <Input
+                      borderRadius="10"
+                      focusOutlineColor={'white'}
+                      style={{color: 'white'}}
+                      size="m"
+                      placeholderTextColor={'white'}
+                      cursorColor={'white'}
+                      autoCapitalize="none"
+                      placeholder={t('common.emailPlaceholder')}
+                      onChangeText={(value) => handleChange({email: value})}
+                    />
+
+                    <Text
+                      bold
+                      white
+                      marginBottom={sizes.s}
+                      marginTop={sizes.sm}>
+                      {t('common.mobilenumber')}
+                    </Text>
+                    <PhoneInput
+                      defaultCode={'SA'}
+                      codeTextStyle={{color: colors.white}}
+                      countryPickerButtonStyle={{
+                        backgroundColor: 'white',
+                        borderBottomLeftRadius: 10,
+                        borderTopLeftRadius: 10,
+                      }}
+                      onChangeCountry={(text) => {
+                        console.log(text);
+                      }}
+                      containerStyle={{
+                        backgroundColor: 'transparent',
+                        borderWidth: 1,
+                        borderColor: colors.white,
+                        borderRadius: 10,
+                        width: '100%',
+                      }}
+                      textInputStyle={{
+                        color: colors.white,
+                      }}
+                      textContainerStyle={{
+                        backgroundColor: 'transparent',
+                      }}
+                      layout="first"
+                      onChangeText={(text) => {
+                        setValue(text);
+                      }}
+                      onChangeFormattedText={(text) => {
+                        setFormattedValue(text);
+                      }}
+                      textInputProps={{placeholderTextColor: '#ffffff'}}
+                      autoFocus
+                    />
+
+                    <Text
+                      bold
+                      white
+                      marginBottom={sizes.s}
+                      marginTop={sizes.sm}
+                      marginLeft={sizes.s}>
+                      {t('register.id_title')}
+                    </Text>
+                    <Input
+                      style={{color: 'white'}}
+                      borderRadius="10"
+                      focusOutlineColor={'white'}
+                      size="m"
+                      placeholderTextColor={'white'}
+                      cursorColor={'white'}
+                      secureTextEntry
+                      autoCapitalize="none"
+                      marginBottom={sizes.s}
+                      placeholder={t('register.id_placeholder')}
+                      onChangeText={(value) => handleChange({password: value})}
+                    />
+                    <Button
+                      white
+                      radius={50}
+                      shadow={!isAndroid}
+                      marginVertical={sizes.s}
+                      marginHorizontal={sizes.sm}
+                      onPress={() => navigation.navigate('Otp')}>
+                      <Text bold primary transform="uppercase">
+                        {t('common.submit')}
+                      </Text>
+                    </Button>
+                  </Block>
+                </Block>
+              </Block>
+            </Block>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </ImageBackground>
     </Block>
   );
 };
-
 export default Register;
+
+{
+  /* //           row> */
+}
+{
+  /* //           <Icon */
+}
+{
+  /* //             as={<Ionicons name={'chevron-back-outline'} />}
+    //             size={7}
+    //             mr="2"
+    //             color="white"
+    //           />
+    //           <Text semibold white p>
+    //             Back
+    //           </Text>
+    //         </Block>
+    //       </TouchableOpacity> */
+}
+
+{
+  /* //       <Block
+    //         align="center"
+    //         marginTop={sizes.sm}
+    //         marginLeft={sizes.s}
+    //         marginBottom={sizes.l}>
+    //         <Text bold white h5>
+    //           Registration
+    //         </Text>
+    //       </Block>
+
+    //       <Block marginTop={sizes.xs} marginLeft={sizes.md}>
+    //         <Block>
+    //           <Select
+    //             color={'white'}
+    //             variant={'underlined'}
+    //             defaultValue="eng"
+    //             selectedValue={language}
+    //             maxWidth={sizes.m}
+    //             accessibilityLabel="Choose Language"
+    //             placeholder="Choose Language"
+    //             _selectedItem={{
+    //               bg: colors.primary,
+    //               endIcon: <CheckIcon size="2" />,
+    //             }}
+    //             onValueChange={(itemValue) => setLanguage(itemValue)}>
+    //             <Select.Item label="English" value="eng" />
+    //             <Select.Item label="Arabic" value="arab" />
+    //           </Select>
+    //         </Block>
+    //       </Block>
+    //     </Block>
+    //   </Block>
+
+    //   <ScrollView
+    //     style={{borderWidth: 2, borderColor: 'red'}}
+    //     contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+    //     <Block keyboard behavior={!isAndroid ? 'padding' : 'height'}>
+    //       <Block
+    //         marginHorizontal={'8%'}
+    //         radius={sizes.sm}
+    //         shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
+    //       >
+    //         <Block
+    //           blur
+    //           intensity={35}
+    //           radius={sizes.sm}
+    //           overflow="hidden"
+    //           justify="space-evenly"
+    //           tint={colors.blurTint}
+    //           paddingVertical={sizes.sm}>
+    //           <Text h4 bold center white>
+    //             {t('register.title')}
+    //           </Text>
+
+    //           <Block
+    //             row
+    //             flex={0}
+    //             align="center"
+    //             justify="center"
+    //             marginBottom={sizes.sm}
+    //             paddingHorizontal={sizes.xxl}></Block>
+
+    //           <Block paddingHorizontal={sizes.sm}>
+    //             <Text bold white marginBottom={sizes.xs} marginLeft={sizes.s}>
+    //               {t('common.email')}
+    //             </Text>
+
+    //             <Input
+    //               borderRadius="10"
+    //               focusOutlineColor={'white'}
+    //               style={{color: 'white'}}
+    //               size="m"
+    //               placeholderTextColor={'white'}
+    //               cursorColor={'white'}
+    //               autoCapitalize="none"
+    //               placeholder={t('common.emailPlaceholder')}
+    //               onChangeText={(value) => handleChange({email: value})}
+    //             />
+
+    //             <Text bold white marginBottom={sizes.s} marginTop={sizes.sm}>
+    //               {t('common.mobilenumber')}
+    //             </Text>
+    //             <PhoneInput
+    //               defaultCode={'SA'}
+    //               codeTextStyle={{color: colors.white}}
+    //               countryPickerButtonStyle={{
+    //                 backgroundColor: 'white',
+    //                 borderBottomLeftRadius: 10,
+    //                 borderTopLeftRadius: 10,
+    //               }}
+    //               onChangeCountry={(text) => {
+    //                 console.log(text);
+    //               }}
+    //               containerStyle={{
+    //                 backgroundColor: 'transparent',
+    //                 borderWidth: 1,
+    //                 borderColor: colors.white,
+    //                 borderRadius: 10,
+    //                 width: '100%',
+    //               }}
+    //               textInputStyle={{
+    //                 color: colors.white,
+    //               }}
+    //               textContainerStyle={{
+    //                 backgroundColor: 'transparent',
+    //               }}
+    //               layout="first"
+    //               onChangeText={(text) => {
+    //                 setValue(text);
+    //               }}
+    //               onChangeFormattedText={(text) => {
+    //                 setFormattedValue(text);
+    //               }}
+    //               textInputProps={{placeholderTextColor: '#ffffff'}}
+    //               withDarkTheme
+    //               autoFocus
+    //             />
+
+    //             <Text
+    //               bold
+    //               white
+    //               marginBottom={sizes.s}
+    //               marginTop={sizes.sm}
+    //               marginLeft={sizes.s}>
+    //               {t('common.password')}
+    //             </Text>
+    //             <Input
+    //               style={{color: 'white'}}
+    //               borderRadius="10"
+    //               focusOutlineColor={'white'}
+    //               size="m"
+    //               placeholderTextColor={'white'}
+    //               cursorColor={'white'}
+    //               secureTextEntry
+    //               autoCapitalize="none"
+    //               marginBottom={sizes.s}
+    //               placeholder={t('common.passwordPlaceholder')}
+    //               onChangeText={(value) => handleChange({password: value})}
+    //             />
+    //           </Block>
+    //           <Button
+    //             white
+    //             radius={50}
+    //             shadow={!isAndroid}
+    //             marginVertical={sizes.s}
+    //             marginHorizontal={sizes.sm}
+    //             onPress={() => navigation.navigate('Otp')}>
+    //             <Text bold primary transform="uppercase">
+    //               {t('common.submit')}
+    //             </Text>
+    //           </Button>
+    //         </Block>
+    //       </Block>
+    //     </Block>
+    //   </ScrollView>
+    // </ImageBackground>
+  );
+}; */
+}

@@ -3109,7 +3109,7 @@ export default function AcountStatement() {
     var month = months[dateAYearAgo.getMonth()];
     var year = dateAYearAgo.getFullYear();
     var day = dateAYearAgo.getDate();
-    var formattedDate = month + '/' + day + '/' + year;
+    var formattedDate = month + ' ' + day + ',' + year;
     return formattedDate;
   };
   const Updated_Date_Month = () => {
@@ -3134,7 +3134,7 @@ export default function AcountStatement() {
     var month = months[dateAYearAgo.getMonth()];
     var year = dateAYearAgo.getFullYear();
     var day = dateAYearAgo.getDate();
-    var formattedDate = month + '/' + day + '/' + year;
+    var formattedDate = month + ' ' + day + ',' + year;
     return formattedDate;
   };
   const Updated_Date_Year = () => {
@@ -3159,7 +3159,7 @@ export default function AcountStatement() {
     var year = dateAYearAgo.getFullYear();
     var month = months[dateAYearAgo.getMonth()];
     var day = dateAYearAgo.getDate();
-    var formattedDate = month + '/' + day + '/' + year;
+    var formattedDate = month + ' ' + day + ',' + year;
     return formattedDate;
   };
 
@@ -3167,77 +3167,62 @@ export default function AcountStatement() {
 
   return (
     <>
-      <View>
+      <View >
         <ScrollView
           scrollEnabled={false}
           onResponderMove={() => {
             console.log('outer responding');
           }}>
-          <Block primary>
-            <Block row paddingTop={sizes.md}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Block
-                  marginTop={sizes.sm}
-                  marginLeft={sizes.s}
-                  marginRight={sizes.md}
-                  row>
-                  <Icon
-                    as={<Ionicons name={'chevron-back-outline'} />}
-                    size={7}
-                    mr="2"
-                    color="white"
-                  />
-                  <Text semibold white p>
-                    Back
-                  </Text>
-                </Block>
-              </TouchableOpacity>
+          <Block primary paddingTop={sizes.m}>
+            <Block row align={'center'} paddingVertical={sizes.sm}>
+              <Block>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Block row align="center">
+                    <Icon
+                      as={<Ionicons name={'chevron-back-outline'} />}
+                      size={7}
+                      color="white"
+                    />
+                    <Text semibold white p>
+                      Back
+                    </Text>
+                  </Block>
+                </TouchableOpacity>
+              </Block>
 
-              <Block
-                align="center"
-                marginTop={sizes.sm}
-                marginLeft={sizes.xs}
-                marginBottom={sizes.l}>
-                <Text semibold white p>
+              <Block align="center" justify="center">
+                <Text bold white center p>
                   A/C Statement
                 </Text>
               </Block>
 
-              <Block row marginTop={sizes.xs} marginLeft={sizes.xs}>
-                <Icon
-                  marginTop={2}
-                  as={<Ionicons name={'search-outline'} />}
-                  size={8}
-                  mr="2"
-                  color="white"
-                />
-                <Block>
-                  <Avatar mr="1">
-                    <Icon
-                      as={<Ionicons name="person-circle-outline" />}
-                      color="white"
-                      size={16}
-                    />
+              <Block row justify="flex-end" align="center">
+                <Block justify="center" align="flex-end">
+                  <Icon
+                    as={<Ionicons name={'search-outline'} />}
+                    size={8}
+                    color="white"
+                  />
+                </Block>
+                <Block align="flex-end" marginRight={sizes.sm}>
+                  <Avatar
+                    size={'md'}
+                    source={{
+                      uri: 'https://bit.ly/broken-link',
+                    }}>
+                    RS
                   </Avatar>
                 </Block>
               </Block>
             </Block>
           </Block>
-
           <Block row>
-            <Block
-              margin={sizes.sm}
-              white
-              // height={sizes.xxl}
-              style={{borderRadius: 10}}>
-              <Block
-                paddingLeft={sizes.sm}
-                paddingTop={sizes.xs}
-                paddingBottom={sizes.s}>
+            <Block margin={sizes.sm} white style={{borderRadius: 10}}>
+              <Block padding={sizes.s}>
                 <Icon
                   as={<Ionicons name="newspaper-outline" />}
                   color="lightBlue.600"
-                  size={12}
+                  size={'4xl'}
                 />
                 <Text primary p>
                   SAR 10000
@@ -3252,19 +3237,21 @@ export default function AcountStatement() {
               <Button primary style={{borderRadius: 80}}>
                 <Text white>Export</Text>
               </Button>
-              <HStack marginTop={sizes.xs}>
-                <Text primary p>
-                  From
-                </Text>
-                <Text marginLeft={sizes.sm}>
-                  {Date_format(new Date(getCurrentTime()))}
-                </Text>
+              <HStack marginTop={sizes.xs} justifyContent={'center'}>
+                <Block>
+                  <Text primary p>
+                    From
+                  </Text>
+                </Block>
+                <Text>{Date_format(new Date(getCurrentTime()))}</Text>
               </HStack>
               <HStack>
-                <Text primary p>
-                  To
-                </Text>
-                <Text marginLeft={sizes.l}>
+                <Block>
+                  <Text primary p>
+                    To
+                  </Text>
+                </Block>
+                <Text>
                   {duration === 1
                     ? Updated_Date_7()
                     : duration === 2
@@ -3284,7 +3271,7 @@ export default function AcountStatement() {
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: sizes.xxl,
+                  height: sizes.xl,
                   backgroundColor: duration === 1 ? 'white' : colors.primary,
                   borderRadius: 26,
                 }}>
@@ -3294,13 +3281,13 @@ export default function AcountStatement() {
               </TouchableOpacity>
             </Block>
 
-            <Block paddingLeft={sizes.sm}>
+            <Block>
               <TouchableOpacity
                 onPress={() => setDuration(2)}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: sizes.xxl,
+                  height: sizes.xl,
                   backgroundColor: duration === 2 ? 'white' : colors.primary,
                   borderRadius: 26,
                 }}>
@@ -3310,13 +3297,13 @@ export default function AcountStatement() {
               </TouchableOpacity>
             </Block>
 
-            <Block paddingLeft={sizes.sm}>
+            <Block>
               <TouchableOpacity
                 onPress={() => setDuration(3)}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: sizes.xxl,
+                  height: sizes.xl,
                   backgroundColor: duration === 3 ? 'white' : colors.primary,
                   borderRadius: 26,
                 }}>
@@ -3329,33 +3316,56 @@ export default function AcountStatement() {
 
           <Block row>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.m} paddingTop={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Funds
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.m} paddingTop={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Date
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} paddingTop={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Activity
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} paddingTop={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Debit
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} paddingTop={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Credit
               </Text>
             </Block>
           </Block>
-
-          {/* <View style={{height: '80%'}}></View> */}
         </ScrollView>
       </View>
       <ScrollView

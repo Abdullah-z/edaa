@@ -11,6 +11,7 @@ import AcountStatement from '../screens/AcountStatement';
 import OrderList from '../screens/OrderList';
 import Holdings from '../screens/Holdings';
 import Dashboard from '../screens/Dashboard';
+import Otp from '../screens/Otp';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,11 @@ export default () => {
       <Stack.Screen
         name="Holdings"
         component={Holdings}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Otp"
+        component={Otp}
         options={{headerShown: false}}
       />
 

@@ -23,7 +23,7 @@ export default function OrderList() {
   const {assets, colors, fonts, gradients, sizes} = useTheme();
   const [id, setId] = useState([]);
   const [name, setName] = useState([]);
-  const [end_State, setEnd_State]=useState(1)
+  const [end_State, setEnd_State] = useState(1);
 
   const data = [
     {
@@ -3060,11 +3060,6 @@ export default function OrderList() {
     return today;
   };
 
-  useEffect(() => {
-    const time = getCurrentTime();
-    setDate(time);
-  }, []);
-
   const Date_format = (date) => {
     const months = [
       'Jan',
@@ -3110,7 +3105,7 @@ export default function OrderList() {
     var month = months[dateAYearAgo.getMonth()];
     var year = dateAYearAgo.getFullYear();
     var day = dateAYearAgo.getDate();
-    var formattedDate = month + '/' + day + '/' + year;
+    var formattedDate = month + ' ' + day + ',' + year;
     return formattedDate;
   };
   const Updated_Date_Month = () => {
@@ -3135,7 +3130,7 @@ export default function OrderList() {
     var month = months[dateAYearAgo.getMonth()];
     var year = dateAYearAgo.getFullYear();
     var day = dateAYearAgo.getDate();
-    var formattedDate = month + '/' + day + '/' + year;
+    var formattedDate = month + ' ' + day + ',' + year;
     return formattedDate;
   };
   const Updated_Date_Year = () => {
@@ -3160,65 +3155,56 @@ export default function OrderList() {
     var year = dateAYearAgo.getFullYear();
     var month = months[dateAYearAgo.getMonth()];
     var day = dateAYearAgo.getDate();
-    var formattedDate = month + '/' + day + '/' + year;
+    var formattedDate = month + ' ' + day + ',' + year;
     return formattedDate;
   };
 
-  console.log('Table Data: ' + tableData);
-
   return (
     <>
-      <View>
+      <View >
         <ScrollView
           scrollEnabled={false}
           onResponderMove={() => {
             console.log('outer responding');
           }}>
-          <Block primary>
-            <Block row paddingTop={sizes.md}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Block
-                  marginTop={sizes.sm}
-                  marginLeft={sizes.s}
-                  marginRight={sizes.md}
-                  row>
-                  <Icon
-                    as={<Ionicons name={'chevron-back-outline'} />}
-                    size={7}
-                    mr="2"
-                    color="white"
-                  />
-                  <Text semibold white p>
-                    Back
-                  </Text>
-                </Block>
-              </TouchableOpacity>
+          <Block primary paddingTop={sizes.m}>
+            <Block row align={'center'} paddingVertical={sizes.sm}>
+              <Block>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Block row align="center">
+                    <Icon
+                      as={<Ionicons name={'chevron-back-outline'} />}
+                      size={7}
+                      color="white"
+                    />
+                    <Text semibold white p>
+                      Back
+                    </Text>
+                  </Block>
+                </TouchableOpacity>
+              </Block>
 
-              <Block
-                align="center"
-                marginTop={sizes.sm}
-                marginLeft={sizes.xs}
-                marginBottom={sizes.l}>
-                <Text bold white p>
-                  Order List
+              <Block align="center" justify="center">
+                <Text bold white h5 center>
+                  OrderList
                 </Text>
               </Block>
 
-              <Block row marginTop={sizes.xs} marginLeft={sizes.xs}>
-                <Icon
-                  marginTop={2}
-                  as={<Ionicons name={'search-outline'} />}
-                  size={8}
-                  mr="2"
-                  color="white"
-                />
-                <Block>
-                  <Avatar mr="1">
-                    <Icon
-                      as={<Ionicons name="person-circle-outline" />}
-                      color="white"
-                      size={16}
-                    />
+              <Block row justify="flex-end" align="center">
+                <Block justify="center" align="flex-end">
+                  <Icon
+                    as={<Ionicons name={'search-outline'} />}
+                    size={8}
+                    color="white"
+                  />
+                </Block>
+                <Block align="flex-end" marginRight={sizes.sm}>
+                  <Avatar
+                    size={'md'}
+                    source={{
+                      uri: 'https://bit.ly/broken-link',
+                    }}>
+                    RS
                   </Avatar>
                 </Block>
               </Block>
@@ -3226,27 +3212,52 @@ export default function OrderList() {
           </Block>
 
           <Block row>
-            <Block  paddingRight={sizes.xs}  paddingLeft={sizes.xs}  paddingTop={sizes.xs}>
-            <Button style={{borderWidth:2, borderColor: end_State===1 ? colors.primary : "silver"}} onPress={()=> setEnd_State(1)}>
-              <Text  bold color={end_State===1 ? colors.primary: colors.gray}>Close End</Text>
-            </Button>
+            <Block padding={sizes.s}>
+              <Button
+                style={{
+                  borderWidth: 2,
+                  borderColor: end_State === 1 ? colors.primary : 'silver',
+                }}
+                onPress={() => setEnd_State(1)}>
+                <Text
+                  bold
+                  color={end_State === 1 ? colors.primary : colors.gray}>
+                  Close End
+                </Text>
+              </Button>
             </Block>
-            <Block  paddingRight={sizes.xs}  paddingLeft={sizes.xs}  paddingTop={sizes.xs}>
-            <Button  style={{borderWidth:2, borderColor: end_State===2 ? colors.primary : "silver"}} onPress={()=> setEnd_State(2)}>
-              <Text bold color={end_State===2 ? colors.primary: colors.gray}>Open End</Text>
-            </Button>
+            <Block padding={sizes.xs}>
+              <Button
+                style={{
+                  borderWidth: 2,
+                  borderColor: end_State === 2 ? colors.primary : 'silver',
+                }}
+                onPress={() => setEnd_State(2)}>
+                <Text
+                  bold
+                  color={end_State === 2 ? colors.primary : colors.gray}>
+                  Open End
+                </Text>
+              </Button>
             </Block>
-            <Block  paddingRight={sizes.xs}  paddingLeft={sizes.xs}  paddingTop={sizes.xs}>
-            <Button primary radius={100} rounded  style={{borderColor:colors.primary,borderWidth:1}}>
-              <Text white>Export</Text>
-            </Button>
+            <Block padding={sizes.xs}>
+              <Button
+                primary
+                radius={100}
+                rounded
+                style={{borderColor: colors.primary, borderWidth: 1}}>
+                <Text white>Export</Text>
+              </Button>
             </Block>
-            
           </Block>
           <Block row>
-            <Block           
-              // height={sizes.xxl}
-              style={{marginTop:sizes.sm,paddingLeft:sizes.s,borderRightWidth:2, borderRightColor:"silver",marginBottom:sizes.sm}}>
+            <Block
+        
+              padding={sizes.s}
+              style={{
+                borderRightWidth: 2,
+                borderRightColor: 'silver',
+              }}>
               <Block>
                 <Text primary bold p>
                   SAR 10000
@@ -3256,20 +3267,22 @@ export default function OrderList() {
                 </Text>
               </Block>
             </Block>
-            <Block paddingTop={sizes.sm} paddingLeft={sizes.s}>
-              <HStack >
-                <Text primary p>
-                  From:
-                </Text>
-                <Text marginLeft={sizes.sm}>
-                  {Date_format(new Date(getCurrentTime()))}
-                </Text>
+            <Block padding={sizes.s}>
+              <HStack>
+                <Block>
+                  <Text primary p>
+                    From:
+                  </Text>
+                </Block>
+                <Text>{Date_format(new Date(getCurrentTime()))}</Text>
               </HStack>
               <HStack>
-                <Text primary p>
-                  To:
-                </Text>
-                <Text marginLeft={sizes.l}>
+                <Block>
+                  <Text primary p>
+                    To:
+                  </Text>
+                </Block>
+                <Text>
                   {request === 1
                     ? Updated_Date_7()
                     : request === 2
@@ -3280,33 +3293,33 @@ export default function OrderList() {
                 </Text>
               </HStack>
             </Block>
-            </Block>
-          <Block primary row>
+          </Block>
+          <Block primary row paddingHorizontal={sizes.s}>
             <Block>
               <TouchableOpacity
                 onPress={() => setRequest(1)}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: sizes.xxl,
+                  height: sizes.xl,
                   backgroundColor: request === 1 ? 'white' : colors.primary,
-                  borderRadius: 26,
+                  borderRadius: 20,
                 }}>
                 <Text bold color={request === 1 ? colors.gray : 'white'}>
-                 Request In
+                  Request In
                 </Text>
               </TouchableOpacity>
             </Block>
 
-            <Block paddingLeft={sizes.sm}>
+            <Block>
               <TouchableOpacity
                 onPress={() => setRequest(2)}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: sizes.xxl,
+                  height: sizes.xl,
                   backgroundColor: request === 2 ? '#ffffff' : colors.primary,
-                  borderRadius: 26,
+                  borderRadius: 20,
                 }}>
                 <Text bold color={request === 2 ? colors.gray : 'white'}>
                   Request Out
@@ -3317,27 +3330,52 @@ export default function OrderList() {
 
           <Block row>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} paddingTop={sizes.s} paddingBottom={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Funds
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.m} paddingTop={sizes.s} paddingBottom={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Date
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.xs} paddingTop={sizes.s} paddingBottom={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Order No.
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} paddingTop={sizes.s} paddingBottom={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Qty
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} paddingTop={sizes.s} paddingBottom={sizes.s}>
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.sm}
+                paddingBottom={sizes.sm}>
                 Type
               </Text>
             </Block>

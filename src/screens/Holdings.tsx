@@ -35,51 +35,44 @@ export default function Holdings() {
           onResponderMove={() => {
             console.log('outer responding');
           }}>
-          <Block primary>
-            <Block row paddingTop={sizes.md}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Block
-                  marginTop={sizes.sm}
-                  marginLeft={sizes.s}
-                  marginRight={sizes.md}
-                  row>
-                  <Icon
-                    as={<Ionicons name={'chevron-back-outline'} />}
-                    size={7}
-                    mr="2"
-                    color="white"
-                  />
-                  <Text semibold white p>
-                    Back
-                  </Text>
-                </Block>
-              </TouchableOpacity>
+          <Block primary paddingTop={sizes.m}>
+            <Block row align={'center'} paddingVertical={sizes.sm}>
+              <Block>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Block row align="center">
+                    <Icon
+                      as={<Ionicons name={'chevron-back-outline'} />}
+                      size={7}
+                      color="white"
+                    />
+                    <Text semibold white p>
+                      Back
+                    </Text>
+                  </Block>
+                </TouchableOpacity>
+              </Block>
 
-              <Block
-                align="center"
-                marginTop={sizes.sm}
-                marginLeft={sizes.xs}
-                marginBottom={sizes.l}>
-                <Text bold white h5>
+              <Block align="center" justify="center">
+                <Text bold white h5 center>
                   Holdings
                 </Text>
               </Block>
 
-              <Block row marginTop={sizes.xs} marginLeft={sizes.xs}>
-                <Icon
-                  marginTop={2}
-                  as={<Ionicons name={'search-outline'} />}
-                  size={8}
-                  mr="2"
-                  color="white"
-                />
-                <Block>
-                  <Avatar mr="1">
-                    <Icon
-                      as={<Ionicons name="person-circle-outline" />}
-                      color="white"
-                      size={16}
-                    />
+              <Block row justify="flex-end" align="center">
+                <Block justify="center" align="flex-end">
+                  <Icon
+                    as={<Ionicons name={'search-outline'} />}
+                    size={8}
+                    color="white"
+                  />
+                </Block>
+                <Block align="flex-end" marginRight={sizes.sm}>
+                  <Avatar
+                    size={'md'}
+                    source={{
+                      uri: 'https://bit.ly/broken-link',
+                    }}>
+                    RS
                   </Avatar>
                 </Block>
               </Block>
@@ -130,7 +123,7 @@ export default function Holdings() {
                     },
                   ]}
                   data={Data}
-                  height={300}
+                  height={250}
                   colorScale={'cool'}
                   style={{
                     data: {
@@ -149,24 +142,39 @@ export default function Holdings() {
               <Text
                 bold
                 primary
-                paddingLeft={sizes.m}
-                marginTop={sizes.sm}
+                align="center"
+                paddingTop={sizes.m}
                 paddingBottom={sizes.sm}>
                 Funds
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary align="center">
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.s}
+                paddingBottom={sizes.sm}>
                 Available Units
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.sm} align="center">
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.s}
+                paddingBottom={sizes.sm}>
                 Market Value
               </Text>
             </Block>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
-              <Text bold primary paddingLeft={sizes.xs} align="center">
+              <Text
+                bold
+                primary
+                align="center"
+                paddingTop={sizes.s}
+                paddingBottom={sizes.sm}>
                 Unrealized G/L %
               </Text>
             </Block>

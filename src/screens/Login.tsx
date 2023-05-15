@@ -1,88 +1,113 @@
-import {View, ScrollView, Dimensions, StatusBar} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  StatusBar,
+  ImageBackground,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/core';
 import {Block, Button, Text} from '../components';
 import {useTheme} from '../hooks';
-import {LinearGradient} from 'expo-linear-gradient';
-import {FormControl, Input, Switch} from 'native-base';
+import {FormControl, Input, HStack, Center, Switch} from 'native-base';
+import Background_Image from '../assets/images/Background_Register.jpg';
+
+const isAndroid = Platform.OS === 'android';
 
 export default function Login() {
   const navigation = useNavigation();
   const {assets, colors, fonts, gradients, sizes} = useTheme();
   return (
-    <ScrollView scrollEnabled={false}>
-      <Block primary paddingTop={sizes.md}>
-        <Block row>
-          <Block padding={sizes.sm}>
-            <Text semibold white p>
-              Back
-            </Text>
+    <Block primary paddingTop={sizes.xl}>
+      <View>
+        <HStack
+          space={20}
+          justifyContent="center"
+          marginX={sizes.s}
+          paddingBottom={sizes.xs}>
+          <Block>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text bold white p>
+                Back
+              </Text>
+            </TouchableOpacity>
           </Block>
-          <Block align="center" padding={sizes.sm}>
-            <Text semibold white p>
-              Login
-            </Text>
-          </Block>
-          <Block padding={sizes.sm}>
-            <Text align="right" semibold white p>
+
+          <Block align="flex-end">
+            <Text bold white p>
               English
             </Text>
           </Block>
-        </Block>
+        </HStack>
+      </View>
 
-        <Block
+      <Block>
+        <ImageBackground
+          source={Background_Image}
+          resizeMode="cover"
           style={{
-            justifyContent: 'center',
+            minHeight:
+              Dimensions.get('window').height + StatusBar.currentHeight,
           }}>
-          <LinearGradient
-            colors={['#fac6ef', '#076597', '#021021']}
-            style={{
-              minHeight: Dimensions.get('window').height,
-              paddingVertical: '50%',
-            }}>
-            <Block marginHorizontal={sizes.sm}>
-              <Block
-                style={{
-                  backgroundColor: 'rgba(112, 154, 195, .5)',
-                  borderRadius: 20,
+          <ScrollView>
+            <KeyboardAvoidingView
+              behavior="position"
+              keyboard
+              kyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}>
+              <Block marginVertical={sizes.md} marginHorizontal={sizes.md}>
+                <Block
+                  blur
+                  intensity={15}
+                  overflow="hidden"
+                  tint={colors.blurTint}
+                  style={{
+                    borderRadius: 20,
+                    maxHeight: 400,
+                  }}
+                  paddingHorizontal={sizes.sm}>
+                  <Text white h4 center paddingTop={sizes.sm}>
+                    Login
+                  </Text>
 
-                  maxHeight: 350,
-                }}
-                paddingHorizontal={sizes.sm}>
-                <Text white h4 center paddingTop={sizes.sm}>
-                  Login
-                </Text>
+                  <Text white semibold marginBottom={sizes.s}>
+                    Email
+                  </Text>
+                  <Input />
+                  <Text
+                    white
+                    semibold
+                    marginTop={sizes.sm}
+                    marginBottom={sizes.s}>
+                    Password
+                  </Text>
+                  <Input />
 
-                <Text white semibold>
-                  Email
-                </Text>
-                <Input />
-                <Text white semibold marginTop={sizes.sm}>
-                  Password
-                </Text>
-                <Input />
-
-                <Block row align="center">
-                  <Switch size="md" />
+                  <View style={{marginTop: sizes.sm, alignSelf: 'flex-start'}}>
+                    <Switch size="md" alignSelf={'flex-end'} />
+                  </View>
                   <Text white semibold>
                     Remember me
                   </Text>
+
+                  <Button
+                    onPress={() => navigation.navigate('Home')}
+                    radius={100}
+                    color={colors.white}
+                    width={'100%'}
+                    marginVertical={sizes.sm}>
+                    <Text p semibold primary>
+                      Login
+                    </Text>
+                  </Button>
                 </Block>
-                <Button
-                  onPress={() => navigation.navigate('Home')}
-                  radius={100}
-                  color={colors.white}
-                  width={'100%'}
-                  marginVertical={sizes.sm}>
-                  <Text p semibold primary>
-                    Login
-                  </Text>
-                </Button>
               </Block>
-            </Block>
-          </LinearGradient>
-        </Block>
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </ImageBackground>
       </Block>
-    </ScrollView>
+    </Block>
   );
 }

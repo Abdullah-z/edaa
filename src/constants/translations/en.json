@@ -34,7 +34,9 @@
     "agree": "I agree with the ",
     "terms": "Terms and Conditions",
     "signup": "Sign Up",
+    "mobilenumber": " Mobile Number",
     "signin": "Sign In",
+    "submit": "Submit",
     "goBack": "Go back",
     "inStock": "In stock",
     "outStock": "Out of stock",
@@ -94,8 +96,20 @@
     "trending": "Trending"
   },
   "register": {
-    "title": "Welcome",
-    "subtitle": "Register with"
+    "title": "Registration",
+    "id_title": "ID",
+    "id_placeholder": "ID Number"
+  },
+  "otp": {
+    "title": "Verify Otp",
+    "subtitle": "OTP Verification",
+    "body": "A message with a Verification code has been send to your phone number.",
+    "heading": "Enter the Code to Continue",
+    "button": "Verify",
+    "label": "OTP",
+    "placeholder": "Enter the OTP",
+    "time": "Your OTP will expire in ",
+    "footer": "You will be redirected to Home Screen after successfull OTP verification"
   },
   "profile": {
     "title": "Profile",
