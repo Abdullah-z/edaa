@@ -6,6 +6,7 @@ import {Home} from '../screens';
 import {Icon} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import {useTheme} from '../hooks';
+import MyWallet from '../screens/MyWallet';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -23,14 +24,6 @@ export default function NavBar() {
     return (
       <View style={styles.container}>
         <Text>My Watch</Text>
-      </View>
-    );
-  }
-
-  function MyWallet() {
-    return (
-      <View style={styles.container}>
-        <Text>MyWallet</Text>
       </View>
     );
   }

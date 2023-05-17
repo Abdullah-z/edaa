@@ -25,7 +25,7 @@ export default () => {
   return (
     <Stack.Navigator
       screenOptions={screenOptions.stack}
-      initialRouteName="Welcome Screen">
+      initialRouteName="My Wallet">
       <Stack.Screen
         name="Home"
         component={NavBar}
