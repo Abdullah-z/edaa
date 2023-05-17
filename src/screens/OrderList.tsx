@@ -3039,19 +3039,22 @@ export default function OrderList() {
       last_updated: '2023-01-08T10:10:59.540Z',
     },
   ];
-  // const Coin_Id = data.map((value) => value.id);
-  // const Coin_Symbol = data.map((value) => value.symbol);
-  // const Coin_Name = data.map((value) => value.name);
-  const tableData = data.map((item) => [
-    <Image
-      style={{height: 22, width: 22}}
-      source={{uri: item.image}}
-      alt={'Image'}
-    />,
-    item.id,
-    item.symbol,
-    item.high_24h,
-    item.low_24h,
+
+  const tableData = data.map((item, index) => [
+    <Block row padding={sizes.xs}>
+      <Image
+        style={{height: 22, width: 22}}
+        source={{uri: item.image}}
+        alt={'Image'}
+      />
+      <Text marginLeft={sizes.sm}>{('00' + index).slice(-3)}</Text>
+    </Block>,
+    item.last_updated.slice(0, 10),
+    ('00' + index).slice(-3),
+    ('5' + item.total_volume).slice(-5),
+    <Text danger center>
+      Sell
+    </Text>,
   ]);
 
   // console.log(Coin_Id);
@@ -3161,7 +3164,7 @@ export default function OrderList() {
 
   return (
     <>
-      <View >
+      <View>
         <ScrollView
           scrollEnabled={false}
           onResponderMove={() => {
@@ -3211,8 +3214,8 @@ export default function OrderList() {
             </Block>
           </Block>
 
-          <Block row>
-            <Block padding={sizes.s}>
+          <Block row marginTop={sizes.sm} marginHorizontal={sizes.sm}>
+            <Block marginHorizontal={sizes.xs}>
               <Button
                 style={{
                   borderWidth: 2,
@@ -3226,7 +3229,7 @@ export default function OrderList() {
                 </Text>
               </Button>
             </Block>
-            <Block padding={sizes.xs}>
+            <Block marginHorizontal={sizes.xs}>
               <Button
                 style={{
                   borderWidth: 2,
@@ -3240,62 +3243,49 @@ export default function OrderList() {
                 </Text>
               </Button>
             </Block>
-            <Block padding={sizes.xs}>
+            <Block marginHorizontal={sizes.xs}>
               <Button
                 primary
                 radius={100}
                 rounded
                 style={{borderColor: colors.primary, borderWidth: 1}}>
-                <Text white>Export</Text>
+                <Text white bold>
+                  Export
+                </Text>
               </Button>
             </Block>
           </Block>
-          <Block row>
-            <Block
-        
-              padding={sizes.s}
+          <Block row margin={sizes.sm}>
+            <View
               style={{
                 borderRightWidth: 2,
                 borderRightColor: 'silver',
+                width: '60%',
               }}>
               <Block>
-                <Text primary bold p>
-                  SAR 10000
+                <Text primary bold h5>
+                  SAR 140,000.4795
                 </Text>
                 <Text gray bold>
                   Opening Balance
                 </Text>
               </Block>
-            </Block>
-            <Block padding={sizes.s}>
-              <HStack>
-                <Block>
-                  <Text primary p>
-                    From:
-                  </Text>
+            </View>
+            <View style={{width: '40%'}}>
+              <Block align="flex-end">
+                <Block row>
+                  <Text primary>From: </Text>
+                  <Text gray>Apr 10,2023</Text>
                 </Block>
-                <Text>{Date_format(new Date(getCurrentTime()))}</Text>
-              </HStack>
-              <HStack>
-                <Block>
-                  <Text primary p>
-                    To:
-                  </Text>
+                <Block row>
+                  <Text primary>To: </Text>
+                  <Text gray>May 10,2023</Text>
                 </Block>
-                <Text>
-                  {request === 1
-                    ? Updated_Date_7()
-                    : request === 2
-                    ? Updated_Date_Month()
-                    : request === 3
-                    ? Updated_Date_Year()
-                    : ''}
-                </Text>
-              </HStack>
-            </Block>
+              </Block>
+            </View>
           </Block>
           <Block primary row paddingHorizontal={sizes.s}>
-            <Block>
+            <Block marginVertical={sizes.xs}>
               <TouchableOpacity
                 onPress={() => setRequest(1)}
                 style={{
@@ -3311,7 +3301,7 @@ export default function OrderList() {
               </TouchableOpacity>
             </Block>
 
-            <Block>
+            <Block marginVertical={sizes.xs}>
               <TouchableOpacity
                 onPress={() => setRequest(2)}
                 style={{
@@ -3388,8 +3378,16 @@ export default function OrderList() {
         onResponderMove={() => {
           console.log('Inner responding');
         }}>
-        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-          <Rows data={tableData} />
+        <Table
+          borderStyle={{
+            borderWidth: 1,
+            borderColor: colors.gray,
+          }}>
+          <Rows
+            data={tableData}
+            textStyle={{textAlign: 'center'}}
+            style={{backgroundColor: '#fff'}}
+          />
         </Table>
       </ScrollView>
     </>

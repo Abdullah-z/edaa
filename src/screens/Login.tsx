@@ -102,6 +102,9 @@ export default function Login() {
                       Login
                     </Text>
                   </Button>
+                  {/* <Text white center>
+                    Forget Password?
+                  </Text> */}
                 </Block>
               </Block>
             </KeyboardAvoidingView>

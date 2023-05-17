@@ -15,6 +15,7 @@ import {
   Cols,
   Cell,
 } from 'react-native-table-component';
+import {StyleSheet} from 'react-native';
 
 export default function AcountStatement() {
   const navigation = useNavigation();
@@ -3047,7 +3048,7 @@ export default function AcountStatement() {
       source={{uri: item.image}}
       alt={'Image'}
     />,
-    item.id,
+    item.last_updated.slice(),
     item.symbol,
     item.high_24h,
     item.low_24h,
@@ -3167,7 +3168,7 @@ export default function AcountStatement() {
 
   return (
     <>
-      <View >
+      <View>
         <ScrollView
           scrollEnabled={false}
           onResponderMove={() => {
@@ -3265,7 +3266,7 @@ export default function AcountStatement() {
           </Block>
 
           <Block primary row>
-            <Block>
+            <Block marginVertical={sizes.xs}>
               <TouchableOpacity
                 onPress={() => setDuration(1)}
                 style={{
@@ -3281,7 +3282,7 @@ export default function AcountStatement() {
               </TouchableOpacity>
             </Block>
 
-            <Block>
+            <Block marginVertical={sizes.xs}>
               <TouchableOpacity
                 onPress={() => setDuration(2)}
                 style={{
@@ -3297,7 +3298,7 @@ export default function AcountStatement() {
               </TouchableOpacity>
             </Block>
 
-            <Block>
+            <Block marginVertical={sizes.xs}>
               <TouchableOpacity
                 onPress={() => setDuration(3)}
                 style={{
@@ -3314,7 +3315,7 @@ export default function AcountStatement() {
             </Block>
           </Block>
 
-          <Block row>
+          {/* <Block row>
             <Block style={{borderRightWidth: 1, borderRightColor: 'silver'}}>
               <Text
                 bold
@@ -3365,7 +3366,7 @@ export default function AcountStatement() {
                 Credit
               </Text>
             </Block>
-          </Block>
+          </Block> */}
         </ScrollView>
       </View>
       <ScrollView
@@ -3373,9 +3374,25 @@ export default function AcountStatement() {
           console.log('Inner responding');
         }}>
         <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-          <Rows data={tableData} />
+          <Row
+            data={['Funds', 'Date', 'Activity', 'Debit', 'Credit']}
+            style={styles.head}
+            textStyle={styles.text}
+          />
+          <Rows
+            style={{backgroundColor: 'white'}}
+            data={tableData}
+            textStyle={{textAlign: 'center'}}
+            flexArr={[1, 1, 1, 1, 1]}
+          />
         </Table>
       </ScrollView>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
+  head: {height: 40, backgroundColor: '#f1f8ff'},
+  text: {margin: 6, textAlign: 'center'},
+});

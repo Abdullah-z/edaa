@@ -12,6 +12,9 @@ import OrderList from '../screens/OrderList';
 import Holdings from '../screens/Holdings';
 import Dashboard from '../screens/Dashboard';
 import Otp from '../screens/Otp';
+import AccounStatement2 from '../screens/AccounStatement2';
+import OrderList2 from '../screens/OrderList2';
+import Holdings2 from '../screens/Holdings2';
 
 const Stack = createStackNavigator();
 
@@ -53,11 +56,7 @@ export default () => {
         component={Holdings}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Otp"
-        component={Otp}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="Otp" component={Otp} options={{headerShown: false}} />
 
       <Stack.Screen
         name="Register"
@@ -92,6 +91,21 @@ export default () => {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Account Statement2"
+        component={AccounStatement2}
+        options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name="Order List2"
+        component={OrderList2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Holdings2"
+        component={Holdings2}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

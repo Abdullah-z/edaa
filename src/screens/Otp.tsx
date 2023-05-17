@@ -106,7 +106,7 @@ const Otp = () => {
   }, [timer]);
 
   return (
-    <Block primary paddingTop={sizes.m}>
+    <Block primary paddingTop={sizes.md}>
       <View>
         <HStack
           paddingBottom={sizes.s}

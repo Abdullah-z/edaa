@@ -104,7 +104,7 @@ export default function WelcomeScreen() {
               Forget Password
             </Text>
           </Block>
-          <Block align="center">
+          <Block align="center" marginTop={sizes.sm}>
             <SliderBox
               images={[
                 'https://source.unsplash.com/1024x768/?stockmarket',
@@ -120,11 +120,11 @@ export default function WelcomeScreen() {
           </Block>
           <Block>
             <Text white>
-              WAMID Saudi Arabia. P.O. Box 0000, Riyadh 11482, Kingdom of Saudi
+              Edaa Saudi Arabia. P.O. Box 0000, Riyadh 11482, Kingdom of Saudi
               Arabia. Regulated by the Saudi Arabia Capital Market Authority
               (License number: 08094-37){'\n'}
-              {'\n'}©WAMID Copyright 2023 all rights reserved. By using this
-              app, you agree to the Electronic Services and Privacy Terms.
+              {'\n'}Edaa Copyright 2023 all rights reserved. By using this app,
+              you agree to the Electronic Services and Privacy Terms.
             </Text>
           </Block>
         </Block>
